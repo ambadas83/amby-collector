@@ -1,12 +1,24 @@
-import requests
-from bs4 import BeautifulSoup
+name: AMBY Collector
 
-url = "https://www.lovethework.com/en/awards/winners-shortlists/cannes-lions/audio-radio?tag=publication+dates%40%40year%40%402026"
+on:
+workflow_dispatch:
 
-response = requests.get(url)
+jobs:
+scrape:
+runs-on: ubuntu-latest
 
-print("Status:", response.status_code)
+```
+steps:
+  - uses: actions/checkout@v4
 
-soup = BeautifulSoup(response.text,"html.parser")
+  - name: Setup Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: '3.11'
 
-print(soup.title.text)
+  - name: Install dependencies
+    run: pip install -r requirements.txt
+
+  - name: Run collector
+    run: python collector.py
+```
